@@ -1,0 +1,249 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>SIP.js Demo Phone</title>
+    <!-- CDN -->
+    <!-- Google jQuery CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+
+    <!-- Font awesome-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js"></script>
+</head>
+
+<body ng-app="app">
+    <!--Nav bar-->
+    <nav class="shop-navbar navbar navbar-default">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+                    aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                <a class="navbar-brand" href="#">Web SoftPhone</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+                <form class="navbar-form navbar-right">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Nhập cần tìm">
+                    </div>
+                    <button type="submit" class="btn btn-default">Tìm kiếm</button>
+
+                </form>
+
+
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+    <!--End Nav bar-->
+
+    <div class="" style="margin-top: 30px" ng-controller="indexCtrl">
+        <div class="row">
+            <div class="col-md-12">
+                <!--Start configuration tab-->
+                <div class="col-md-4">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            Configuration
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <h3 class="text-danger bg-danger text-center">{{logs[0].message}}</h3>
+                            </div>
+                            <form class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2" for="name">Name</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="name" placeholder="Enter your name" ng-model="name">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2" for="mysip">SIP</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="mysip" placeholder="Enter your sip" ng-model="mysip">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2" for="auth_username">Auth Username</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="auth_username" placeholder="Enter auth username" ng-model="auth_username">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2" for="password">Password</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="password" placeholder="Enter password" ng-model="password">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2" for="ws_server">WS Server</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="ws_server" placeholder="Enter ws server address" ng-model="ws_server">
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button type="submit" class="btn btn-default" ng-click="initPhone()"><i class="fa fa-volume-control-phone" ></i> Regist me!</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!--End configuration tab-->
+
+                <!--Start video tab-->
+                <div class="col-md-5">
+                    <div class="col-md-6">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading"><i class="fa fa-map-marker"></i> Local video</div>
+                            <div class="panel-body">
+                                <div class="mp-panel">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <fieldset>
+                                                <legend> Video</legend>
+                                                <div class="localVideo" style="background-color: red; width: 100%">
+                                                    <video id="localVideoFrame" controls></video>
+                                                </div>
+                                            </fieldset>
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <fieldset>
+                                                <legend> Audio</legend>
+                                                <div class="localAudio" style="background-color: red; width: 100%">
+                                                    <audio id="localAudioFrame" controls></audio>
+                                                </div>
+                                            </fieldset>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row" style="margin-top: 20px">
+                                        <div class="col-md-12">
+                                            <div class="remoteAudio">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6" style="height: 400px">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading"><i class="fa fa-globe"></i> Remote video</div>
+                            <div class="panel-body" style="min-height: 200px">
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <fieldset>
+                                            <legend> Video</legend>
+                                            <div class="remoteVideo" style="background-color: red; width: 100%">
+                                                <video id="remoteVideoFrame" controls></video>
+                                            </div>
+                                        </fieldset>
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <fieldset>
+                                            <legend> Audio</legend>
+                                            <div class="remoteVideo" style="background-color: red; width: 100%">
+                                                <audio id="remoteAudioFrame" controls></audio>
+                                            </div>
+                                        </fieldset>
+
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin-top: 20px">
+                                    <div class="col-md-12">
+                                        <div class="remoteAudio">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--End video tab-->
+
+                <!-- Start Log tab -->
+                <div class="col-md-3">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <i class="fa fa-database"></i>
+                            Logging
+                        </div>
+                        <div class="panel-body" style="height: 300px; overflow: auto">
+                            <div class="row">
+                                <h3 class="text-info text-center">Logging detail</h3>
+                            </div>
+                            <div>
+                                <p ng-repeat="item in logs">
+                                    <span class="log_group text-danger">[{{item.type}}] :</span>
+                                    <span class="log_detail">{{item.message}}</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- End log tab -->
+
+            </div>
+        </div>
+    </div>
+
+    <script src="js/sip-0.8.3.js">
+
+    </script>
+    <script>
+        var mySIP = '';
+        var otherSIP = '';
+
+        function initPhone() {
+            // Create a Simple interface with a user named bob and a remote video element in the DOM
+            var simple = new SIP.WebRTC.Simple({
+                ua: {
+                    uri: 'bob@example.com',
+                    wsServers: ['wss://sip-ws.example.com'],
+                }
+            });
+        }
+    </script>
+    <script src="js/app.js"></script>
+
+</body>
+
+</html>
